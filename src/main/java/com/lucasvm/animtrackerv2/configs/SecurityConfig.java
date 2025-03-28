@@ -34,12 +34,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
-
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/css/**", "/js/**", "/registro", "/login", "/registro/processar", "/termos", "/privacidade", "/completar-perfil").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/registro", "/login", "/registro/processar", "/termos", "/privacidade", "/completar-perfil", "/swagger-ui.html", "/api/usuarios").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -59,10 +56,7 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 )
-                .csrf(csrf -> csrf
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .csrfTokenRequestHandler(requestHandler)
-                );
+                .csrf(csrf -> csrf.disable()); // Desabilita CSRF completamente
 
         return http.build();
     }

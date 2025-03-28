@@ -95,10 +95,21 @@ public class UsuarioService implements UserDetailsService {
         model.setData_nascimento(dto.getData_nascimento());
         model.setEmail(dto.getEmail());
         model.setSenha(passwordEncoder.encode(dto.getSenha()));
-        model.setStatus(UsuarioModel.UsuarioStatus.valueOf(dto.getStatus()));
-        model.setAuth_provider(dto.getAuth_provider());
+
+        // Tratamento para o caso de status nulo
+        if (dto.getStatus() == null) {
+            model.setStatus(UsuarioModel.UsuarioStatus.ATIVO);
+        } else {
+            model.setStatus(UsuarioModel.UsuarioStatus.valueOf(dto.getStatus()));
+        }
+
+        // Tratamento para o caso de auth_provider nulo
+        if (dto.getAuth_provider() == null) {
+            model.setAuth_provider("Local");
+        } else {
+            model.setAuth_provider(dto.getAuth_provider());
+        }
+
         return model;
     }
-
-
 }
