@@ -1,8 +1,11 @@
 package com.lucasvm.animtrackerv2.services;
 
+import com.lucasvm.animtrackerv2.dtos.UsuarioDTO;
 import com.lucasvm.animtrackerv2.models.UsuarioModel;
 import com.lucasvm.animtrackerv2.repositories.UsuarioRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -37,11 +40,24 @@ public class UsuarioService implements UserDetailsService {
                 .build();
     }
 
-    public UsuarioModel salvarUsuario(UsuarioModel usuario) {
-        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+    public UsuarioDTO salvar(UsuarioDTO dto) {
+        UsuarioModel usuario = convertToEntity(dto);
+        usuario = usuarioRepository.save(usuario);
+        return convertToDTO(usuario);
+    }
 
-        return usuarioRepository.save(usuario);
+    public UsuarioDTO atualizar(UUID id, UsuarioDTO dto) {
+        UsuarioModel usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
+        BeanUtils.copyProperties(dto, usuario, "id", "senha");
+        usuario = usuarioRepository.save(usuario);
+        return convertToDTO(usuario);
+    }
+
+    public void remover(UUID id) {
+        usuarioRepository.findById(id)
+                .ifPresent(usuarioRepository::delete);
     }
 
     public UsuarioModel getUsuarioAutenticado(Principal principal) {
@@ -60,6 +76,29 @@ public class UsuarioService implements UserDetailsService {
         return usuarioAutenticado;
     }
 
+    public UsuarioDTO convertToDTO(UsuarioModel model) {
+        UsuarioDTO dto = new UsuarioDTO();
+        dto.setId(model.getId());
+        dto.setNome(model.getNome());
+        dto.setData_nascimento(model.getData_nascimento());
+        dto.setEmail(model.getEmail());
+        dto.setSenha(model.getSenha());
+        dto.setStatus(model.getStatus().toString());
+        dto.setAuth_provider(model.getAuth_provider());
+        return dto;
+    }
+
+    public UsuarioModel convertToEntity(UsuarioDTO dto) {
+        UsuarioModel model = new UsuarioModel();
+        model.setId(dto.getId());
+        model.setNome(dto.getNome());
+        model.setData_nascimento(dto.getData_nascimento());
+        model.setEmail(dto.getEmail());
+        model.setSenha(passwordEncoder.encode(dto.getSenha()));
+        model.setStatus(UsuarioModel.UsuarioStatus.valueOf(dto.getStatus()));
+        model.setAuth_provider(dto.getAuth_provider());
+        return model;
+    }
 
 
 }

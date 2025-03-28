@@ -52,6 +52,10 @@ public class UsuarioModel implements Serializable {
         UsuarioStatus(String displayName) {
             this.displayName = displayName;
         }
+
+        public String getDisplayName() {
+            return displayName;
+        }
     }
 
     @CreationTimestamp

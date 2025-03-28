@@ -104,7 +104,6 @@ public class ProjetoService {
         projeto.setResponsavel(dto.getResponsavel());
         projeto.setPasta_arquivos(dto.getPasta_arquivos());
         projeto.setObservacoes(dto.getObservacoes());
-        // Cliente deve ser configurado separadamente
         return projeto;
     }
 }
