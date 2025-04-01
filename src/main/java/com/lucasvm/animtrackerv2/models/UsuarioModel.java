@@ -24,7 +24,7 @@ public class UsuarioModel implements Serializable {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate data_nascimento;
 
     @Email

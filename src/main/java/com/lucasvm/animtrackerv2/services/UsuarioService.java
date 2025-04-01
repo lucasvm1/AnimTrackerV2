@@ -76,6 +76,10 @@ public class UsuarioService implements UserDetailsService {
         return usuarioAutenticado;
     }
 
+    public boolean existsByEmail(String email) {
+        return usuarioRepository.findByEmail(email).isPresent();
+    }
+
     public UsuarioDTO convertToDTO(UsuarioModel model) {
         UsuarioDTO dto = new UsuarioDTO();
         dto.setId(model.getId());
