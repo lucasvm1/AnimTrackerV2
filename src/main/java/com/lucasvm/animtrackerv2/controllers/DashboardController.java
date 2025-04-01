@@ -1,7 +1,6 @@
 package com.lucasvm.animtrackerv2.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.lucasvm.animtrackerv2.models.UsuarioModel;
 import com.lucasvm.animtrackerv2.repositories.UsuarioRepository;
 import com.lucasvm.animtrackerv2.services.UsuarioService;
@@ -12,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Map;
 
 @Controller

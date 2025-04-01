@@ -1,0 +1,406 @@
+/* Variáveis CSS para temas */
+:root {
+    --primary-color: #667eea;
+    --primary-dark: #5a67d8;
+    --primary-gradient: linear-gradient(135deg, #667eea, #764ba2);
+    --secondary-color: #764ba2;
+    --text-color: #2b2b2b;
+    --text-muted: #6c757d;
+    --bg-color: #f9f9fa;
+    --card-bg: #ffffff;
+    --input-bg: rgba(102, 126, 234, 0.05);
+    --input-border: #e0e0e0;
+    --input-focus-bg: rgba(102, 126, 234, 0.15);
+    --shadow-color: rgba(0, 0, 0, 0.15);
+    --divider-color: #e0e0e0;
+    --success-color: #28a745;
+    --google-color: #ea4335;
+    --transition-speed: 0.3s;
+}
+
+/* Variáveis para o tema escuro */
+.at-registro--dark {
+    --primary-color: #9d8eff;
+    --primary-dark: #8d7fff;
+    --primary-gradient: linear-gradient(135deg, #9d8eff, #a64ba2);
+    --secondary-color: #a64ba2;
+    --text-color: #e0e0e0;
+    --text-muted: #b0b0b0;
+    --bg-color: #1a1a2e;
+    --card-bg: #16213e;
+    --input-bg: rgba(157, 142, 255, 0.05);
+    --input-border: #2c2c44;
+    --input-focus-bg: rgba(157, 142, 255, 0.15);
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --divider-color: #2c2c44;
+}
+
+* {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.at-registro {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    position: relative;
+}
+
+/* Botão de alternar tema */
+.at-registro__theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.at-registro__theme-button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    box-shadow: 0 5px 15px var(--shadow-color);
+    transition: all var(--transition-speed);
+}
+
+.at-registro__theme-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+/* Container principal */
+.at-registro__container {
+    width: 100%;
+    padding: 20px;
+    max-width: 1200px;
+}
+
+/* Card de registro */
+.at-registro__card {
+    display: flex;
+    background-color: var(--card-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px var(--shadow-color);
+    transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+/* Lado esquerdo do card (apenas logo) */
+.at-registro__card-left {
+    background: var(--primary-gradient);
+    padding: 40px;
+    color: white;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.at-registro__brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.at-registro__brand i {
+    font-size: 4rem;
+    margin-bottom: 15px;
+}
+
+.at-registro__brand h1 {
+    font-weight: 700;
+    margin: 0;
+    font-size: 2.2rem;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+}
+
+/* Lado direito do card (formulário) */
+.at-registro__card-right {
+    width: 70%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.at-registro__title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    transition: color var(--transition-speed);
+}
+
+.at-registro__subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    transition: color var(--transition-speed);
+}
+
+/* Formulário */
+.at-registro__form {
+    width: 100%;
+}
+
+.at-registro__input-group {
+    margin-bottom: 20px;
+}
+
+.at-registro__input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: color var(--transition-speed);
+}
+
+.at-registro__input-wrapper {
+    position: relative;
+}
+
+.at-registro__input-wrapper i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.at-registro__input-wrapper input {
+    width: 100%;
+    padding: 15px 45px 15px 45px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    background-color: var(--input-bg);
+    font-size: 1rem;
+    color: var(--text-color);
+    transition: all var(--transition-speed);
+}
+
+.at-registro__input-wrapper input:focus {
+    outline: none;
+    background-color: var(--input-focus-bg);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+}
+
+.at-registro__input-wrapper input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.at-registro__password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color var(--transition-speed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+    width: 24px;
+    padding: 0;
+}
+
+.at-registro__password-toggle:hover {
+    color: var(--primary-color);
+}
+
+/* Termos de serviço */
+.at-registro__terms {
+    margin-bottom: 25px;
+}
+
+.at-registro__terms .form-check-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.at-registro__terms a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+.at-registro__terms a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.form-check-input {
+    accent-color: var(--primary-color);
+}
+
+/* Botões */
+.at-registro__btn-primary {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background: var(--primary-gradient);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-speed);
+}
+
+.at-registro__btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255,255,255,0.1);
+    transform: rotate(45deg);
+    z-index: 1;
+    transition: all var(--transition-speed);
+}
+
+.at-registro__btn-primary:hover {
+    box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
+}
+
+.at-registro__btn-primary:hover::after {
+    left: 0;
+    top: 0;
+}
+
+/* Divisor */
+.at-registro__divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+    color: var(--text-muted);
+}
+
+.at-registro__divider::before,
+.at-registro__divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: var(--divider-color);
+}
+
+.at-registro__divider span {
+    padding: 0 15px;
+    font-size: 0.9rem;
+}
+
+/* Botão Google */
+.at-registro__btn-google {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--divider-color);
+    border-radius: 8px;
+    background-color: transparent;
+    color: var(--text-color);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.at-registro__btn-google i {
+    margin-right: 10px;
+    color: var(--google-color);
+    font-size: 1.2rem;
+}
+
+.at-registro__btn-google:hover {
+    background-color: var(--input-bg);
+    border-color: var(--primary-color);
+}
+
+/* Link de login */
+.at-registro__login {
+    margin-top: 25px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.at-registro__login a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition-speed);
+}
+
+.at-registro__login a:hover {
+    text-decoration: underline;
+    color: var(--primary-dark);
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .at-registro__card {
+        flex-direction: column;
+    }
+    .at-registro__card-left,
+    .at-registro__card-right {
+        width: 100%;
+    }
+    .at-registro__card-left {
+        padding: 40px 30px;
+    }
+
+    .at-registro__brand {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .at-registro__brand i {
+        font-size: 2.5rem;
+        margin-bottom: 0;
+        margin-right: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .at-registro__card-left,
+    .at-registro__card-right {
+        padding: 25px;
+    }
+    .at-registro__title {
+        font-size: 1.7rem;
+    }
+    .at-registro__input-wrapper input {
+        padding: 12px 12px 12px 40px;
+    }
+}
