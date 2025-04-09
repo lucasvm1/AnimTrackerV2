@@ -90,7 +90,7 @@ public class ProjetoService {
         return dto;
     }
 
-    private ProjetoModel convertToEntity(ProjetoDTO dto) {
+    public ProjetoModel convertToEntity(ProjetoDTO dto) {
         ProjetoModel projeto = new ProjetoModel();
         projeto.setId(dto.getId());
         projeto.setNome(dto.getNome());

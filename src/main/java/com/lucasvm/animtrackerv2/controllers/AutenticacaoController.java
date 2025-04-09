@@ -22,12 +22,10 @@ public class AutenticacaoController {
 
     @GetMapping("/")
     public String home(Principal principal) {
-        // Se não estiver autenticado, redirecionar para login
         if (principal == null) {
             return "redirect:/login";
         }
 
-        // Se estiver autenticado, redirecionar para dashboard
         try {
             usuarioService.getUsuarioAutenticado(principal);
             return "redirect:/dashboard";
@@ -58,20 +56,16 @@ public class AutenticacaoController {
             RedirectAttributes redirectAttributes) {
 
         try {
-            // Verificar se o email já existe
             if (usuarioService.existsByEmail(email)) {
                 redirectAttributes.addFlashAttribute("erro", "Este email já está em uso.");
                 return "redirect:/registro";
             }
 
-            // Criar DTO
             UsuarioDTO usuarioDTO = new UsuarioDTO();
-            // Não definimos o ID manualmente - deixamos o JPA gerenciar isso
             usuarioDTO.setNome(nome);
             usuarioDTO.setEmail(email);
             usuarioDTO.setSenha(senha);
 
-            // Se a data de nascimento foi fornecida, converter para LocalDate
             if (data_nascimento != null && !data_nascimento.isEmpty()) {
                 usuarioDTO.setData_nascimento(LocalDate.parse(data_nascimento));
             }
@@ -79,10 +73,8 @@ public class AutenticacaoController {
             usuarioDTO.setStatus("ATIVO");
             usuarioDTO.setAuth_provider("Local");
 
-            // Salvar o usuário
             usuarioService.salvar(usuarioDTO);
 
-            // Redirecionar para o login com mensagem de sucesso
             redirectAttributes.addFlashAttribute("sucesso", "Conta criada com sucesso! Faça login para continuar.");
             return "redirect:/login";
 
