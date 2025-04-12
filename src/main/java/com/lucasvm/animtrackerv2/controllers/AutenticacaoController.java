@@ -2,6 +2,8 @@ package com.lucasvm.animtrackerv2.controllers;
 
 import com.lucasvm.animtrackerv2.dtos.UsuarioDTO;
 import com.lucasvm.animtrackerv2.services.UsuarioService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -92,5 +94,14 @@ public class AutenticacaoController {
     @GetMapping("/privacidade")
     public String paginaPrivacidade() {
         return "views/autenticacao/privacidade";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/login";
     }
 }

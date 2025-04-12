@@ -176,7 +176,7 @@ public class ProjetoController {
 
         if (projetoOpt.isPresent()) {
             projetoService.atualizar(id, projetoDTO, usuarioAutenticado.getId());
-            return "redirect:/projeto/";
+            return "redirect:/projeto/" + id;
         } else {
             return "/views/projetos/nao-encontrado";
         }

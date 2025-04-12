@@ -2,7 +2,6 @@ package com.lucasvm.animtrackerv2.controllers;
 
 import com.lucasvm.animtrackerv2.dtos.ClienteDTO;
 import com.lucasvm.animtrackerv2.models.ClienteModel;
-import com.lucasvm.animtrackerv2.models.UsuarioModel;
 import com.lucasvm.animtrackerv2.repositories.ClienteRepository;
 import com.lucasvm.animtrackerv2.services.ClienteService;
 import com.lucasvm.animtrackerv2.services.UsuarioService;
@@ -71,10 +70,10 @@ public class ClienteController {
         model.addAttribute("clientesPorLetra", clientesPorLetra);
         model.addAttribute("letrasDisponiveis", letrasDisponiveis);
 
-        model.addAttribute("tiposClientes", List.of(ClienteModel.TipoCliente.values()));
+        model.addAttribute("clientesTipos", List.of(ClienteModel.TipoCliente.values()));
         model.addAttribute("clientesCategorias", List.of(ClienteModel.CategoriaCliente.values()));
 
-        return "/views/clientes/principal";
+        return "views/clientes/principal";
     }
 
     @GetMapping("/cliente/criar")
@@ -94,7 +93,7 @@ public class ClienteController {
         List<ClienteModel.CategoriaCliente> clientesCategorias = Arrays.asList(ClienteModel.CategoriaCliente.values());
         model.addAttribute("clientesCategorias", clientesCategorias);
 
-        return "/views/clientes/criar";
+        return "views/clientes/criar";
     }
 
     @PostMapping("/cliente/criar")
@@ -126,9 +125,9 @@ public class ClienteController {
 
         if (clienteOpt.isPresent()) {
             model.addAttribute("cliente", clienteOpt.get());
-            return "/views/clientes/detalhes";
+            return "views/clientes/detalhes";
         } else {
-            return "/views/clientes/nao-encontrado";
+            return "views/clientes/nao-encontrado";
         }
     }
 
@@ -164,9 +163,9 @@ public class ClienteController {
             List<ClienteModel.CategoriaCliente> clientesCategorias = Arrays.asList(ClienteModel.CategoriaCliente.values());
             model.addAttribute("clientesCategorias", clientesCategorias);
 
-            return "/views/clientes/editar";
+            return "views/clientes/editar";
         } else {
-            return "/views/clientes/nao-encontrado";
+            return "views/clientes/nao-encontrado";
         }
     }
 
@@ -186,7 +185,7 @@ public class ClienteController {
             clienteService.atualizar(id, clienteDTO, usuarioAutenticado.getId());
             return "redirect:/cliente/" + id;
         } else {
-            return "/views/clientes/nao-encontrado";
+            return "views/clientes/nao-encontrado";
         }
     }
 
@@ -206,7 +205,7 @@ public class ClienteController {
             clienteService.remover(id, usuarioAutenticado.getId());
             return "redirect:/clientes";
         } else {
-            return "/views/clientes/nao-encontrado";
+            return "views/clientes/nao-encontrado";
         }
     }
 

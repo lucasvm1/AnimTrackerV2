@@ -69,10 +69,10 @@ public class ClienteModel implements Serializable {
         PESSOA_FISICA("Pessoa Física"),
         PESSOA_JURIDICA("Pessoa Jurídica");
 
-        private final String displayNameTipo;
+        private final String displayName;
 
         TipoCliente(String displayName) {
-            this.displayNameTipo = displayName;
+            this.displayName = displayName;
         }
     }
 
@@ -83,10 +83,10 @@ public class ClienteModel implements Serializable {
         PUBLICIDADE("Publicidade"),
         OUTROS("Outros");
 
-        private final String displayNameCategoria;
+        private final String displayName;
 
         CategoriaCliente(String displayName) {
-            this.displayNameCategoria = displayName;
+            this.displayName = displayName;
         }
     }
 
