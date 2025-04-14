@@ -1,5 +1,6 @@
 package com.lucasvm.animtrackerv2.dtos;
 
+import com.lucasvm.animtrackerv2.models.CenaModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,8 +16,8 @@ public class CenaDTO {
     private UUID id;
     private String numero_codigo;
     private String descricao;
-    private String status; // Valor do enum StatusCena
-    private String estagio; // Valor do enum EstagioCena
+    private CenaModel.StatusCena status; // Alterado de String para enum
+    private CenaModel.EstagioCena estagio; // Alterado de String para enum
     private int frames;
     private BigDecimal duracao;
     private int pontuacao;

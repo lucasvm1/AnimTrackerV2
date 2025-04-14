@@ -69,13 +69,14 @@ public class CenaService {
                 .ifPresent(cenaRepository::delete);
     }
 
+    // No método convertToDTO
     public CenaDTO convertToDTO(CenaModel cena) {
         CenaDTO dto = new CenaDTO();
         dto.setId(cena.getId());
         dto.setNumero_codigo(cena.getNumero_codigo());
         dto.setDescricao(cena.getDescricao());
-        dto.setStatus(cena.getStatus().toString());
-        dto.setEstagio(cena.getEstagio().toString());
+        dto.setStatus(cena.getStatus()); // Alterado: diretamente o enum
+        dto.setEstagio(cena.getEstagio()); // Alterado: diretamente o enum
         dto.setFrames(cena.getFrames());
         dto.setDuracao(cena.getDuracao());
         dto.setPontuacao(cena.getPontuacao());
@@ -87,13 +88,14 @@ public class CenaService {
         return dto;
     }
 
+    // No método convertToEntity
     public CenaModel convertToEntity(CenaDTO dto) {
         CenaModel cena = new CenaModel();
         cena.setId(dto.getId());
         cena.setNumero_codigo(dto.getNumero_codigo());
         cena.setDescricao(dto.getDescricao());
-        cena.setStatus(CenaModel.StatusCena.valueOf(dto.getStatus()));
-        cena.setEstagio(CenaModel.EstagioCena.valueOf(dto.getEstagio()));
+        cena.setStatus(dto.getStatus()); // Alterado: não precisa mais de valueOf
+        cena.setEstagio(dto.getEstagio()); // Alterado: não precisa mais de valueOf
         cena.setFrames(dto.getFrames());
         cena.setDuracao(dto.getDuracao());
         cena.setPontuacao(dto.getPontuacao());

@@ -1,5 +1,6 @@
 package com.lucasvm.animtrackerv2.dtos;
 
+import com.lucasvm.animtrackerv2.models.ClienteModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.UUID;
 public class ClienteDTO {
     private UUID id;
     private String nome;
-    private String tipo;
+    private ClienteModel.TipoCliente tipo; // Alterado de String para enum
     private String email_principal;
     private String telefone_principal;
     private String site;
@@ -21,7 +22,7 @@ public class ClienteDTO {
     private String cargo_contato;
     private String email_secundario;
     private String telefone_secundario;
-    private String categoria;
+    private ClienteModel.CategoriaCliente categoria; // Alterado de String para enum
     private String observacoes;
     private LocalDateTime data_cadastro;
     private UUID usuario_id;

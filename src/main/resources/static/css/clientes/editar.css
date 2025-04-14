@@ -1,0 +1,199 @@
+/* Modo escuro padronizado com criar.css */
+:root {
+    --primary-gradient: linear-gradient(135deg, #9d8eff, #a64ba2);
+    --bg-color: #1a1a2e;
+    --text-color: #e8e8e8;
+    --accent-color: #a64ba2;
+    --transition: all 0.3s ease;
+    --card-bg: #2a2a40;
+    --form-bg: rgba(255, 255, 255, 0.05);
+    --form-hover-bg: rgba(255, 255, 255, 0.08);
+    --form-focus-bg: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+    margin-top: auto;
+}
+
+.at-cliente__page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5vh;
+    padding: 20px;
+    width: 100%;
+}
+
+.at-cliente__container-fluid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.at-cliente__card {
+    width: 90vw;             /* ocupa 90% da tela */
+    max-width: 1200px;      /* não excede 1400px em desktops grandes */
+    margin: 0 auto;         /* centraliza o card */
+    border-radius: 16px;
+    background-color: var(--card-bg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    border: none;
+}
+
+.at-cliente__bg-gradiente {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.at-cliente__avatar-iniciais {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 64px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+}
+
+.at-cliente__nome {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.at-cliente__info-container {
+    padding: 30px;
+}
+
+.at-cliente__secao-titulo {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.at-cliente__info-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 5px;
+}
+
+.at-cliente__info-valor {
+    background-color: var(--form-bg) !important;
+    color: var(--text-color) !important;
+    border: none;
+    border-bottom: 1px dashed var(--accent-color) !important;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    box-shadow: none;
+    transition: var(--transition);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin-bottom: 20px;
+}
+
+.at-cliente__info-valor:hover {
+    background-color: var(--form-hover-bg) !important;
+}
+
+.at-cliente__info-valor:focus {
+    background-color: var(--form-focus-bg) !important;
+    border-bottom: 1px solid var(--accent-color) !important;
+    outline: none;
+}
+
+.at-cliente__info-valor::placeholder {
+    color: rgba(255, 255, 255, 0.3) !important;
+    font-style: italic;
+}
+
+.at-cliente__info-valor option {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.at-cliente__btn-primary {
+    background: var(--primary-gradient);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.at-cliente__btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(45deg);
+    transition: var(--transition);
+}
+
+.at-cliente__btn-primary:hover::after {
+    left: 0;
+    top: 0;
+}
+
+.at-cliente__acoes-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+::placeholder {
+    color: rgba(255, 255, 255, 0.3) !important;
+    font-style: italic !important;
+}
+
+@media (max-width: 767.98px) {
+    .at-cliente__acoes-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .at-cliente__card {
+        width: 95%;         /* ganha um pouquinho mais de espaço em celular */
+        max-width: 600px;   /* limite razoável para celulares/tablets */
+        margin: 0 auto;
+    }
+}
