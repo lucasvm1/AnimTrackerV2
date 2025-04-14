@@ -69,6 +69,7 @@ public class CenaController {
                 ));
 
         model.addAttribute("cenasPorStatus", cenasPorStatus);
+        model.addAttribute("usuario", usuarioAutenticado);
 
         return "viewa/cenas/principal";
 
@@ -90,6 +91,7 @@ public class CenaController {
 
         List<CenaModel.StatusCena> statusCenas = List.of(CenaModel.StatusCena.values());
         model.addAttribute("statusCenas", statusCenas);
+        model.addAttribute("usuario", usuarioAutenticado);
 
         return "views/cenas/criar";
     }
@@ -125,6 +127,7 @@ public class CenaController {
 
         if(cenaOpt.isPresent()) {
             model.addAttribute("cena", cenaOpt.get());
+            model.addAttribute("usuario", usuarioAutenticado);
             return "views/cenas/detalhes";
         } else {
             return "views/cenas/nao_encontrada";
@@ -161,6 +164,8 @@ public class CenaController {
 
             List<CenaModel.StatusCena> statusCenas = List.of(CenaModel.StatusCena.values());
             model.addAttribute("statusCenas", statusCenas);
+
+            model.addAttribute("usuario", usuarioAutenticado);
 
             return "views/cenas/editar";
         } else {

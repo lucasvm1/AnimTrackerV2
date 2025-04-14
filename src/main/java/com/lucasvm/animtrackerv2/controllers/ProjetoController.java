@@ -63,6 +63,7 @@ public class ProjetoController {
                 ));
 
         model.addAttribute("projetosPorStatus", projetosPorStatus);
+        model.addAttribute("usuario", usuarioAutenticado);
 
         return "views/projetos/principal";
     }
@@ -84,6 +85,8 @@ public class ProjetoController {
         List<ProjetoModel.statusProjeto> statusProjeto = List.of(ProjetoModel.statusProjeto.values());
         model.addAttribute("statusProjeto", statusProjeto);
 
+        model.addAttribute("usuario", usuarioAutenticado);
+
         return "views/projetos/criar";
     }
 
@@ -99,6 +102,7 @@ public class ProjetoController {
         }
 
         projetoService.salvar(projetoDTO, usuarioAutenticado.getId());
+
 
         return "redirect:/projetos";
     }
@@ -118,6 +122,7 @@ public class ProjetoController {
 
         if (projetoOpt.isPresent()) {
             model.addAttribute("projeto", projetoOpt.get());
+            model.addAttribute("usuario", usuarioAutenticado);
             return "views/projetos/detalhes";
         } else {
             return "views/projetos/nao-encontrado";
@@ -154,6 +159,8 @@ public class ProjetoController {
 
             List<ProjetoModel.statusProjeto> statusProjeto = List.of(ProjetoModel.statusProjeto.values());
             model.addAttribute("statusProjeto", statusProjeto);
+
+            model.addAttribute("usuario", usuarioAutenticado);
 
             return "views/projetos/editar";
         } else {

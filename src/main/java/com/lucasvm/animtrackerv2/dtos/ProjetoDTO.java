@@ -16,11 +16,11 @@ public class ProjetoDTO {
     private UUID id;
     private String nome;
     private String descricao;
-    private String status;
+    private ProjetoModel.statusProjeto status; // Alterado de String para enum
     private LocalDateTime data_inicio;
     private LocalDateTime data_previsao;
     private LocalDateTime data_conclusao;
-    private ProjetoModel.tipoAnimacao tipo_animacao;
+    private ProjetoModel.tipoAnimacao tipo_animacao; // Já está como enum
     private BigDecimal duracao_segundos;
     private String responsavel;
     private String pasta_arquivos;

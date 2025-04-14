@@ -61,11 +61,12 @@ public class ClienteService {
                 .ifPresent(clienteRepository::delete);
     }
 
+    // No método convertToDTO
     private ClienteDTO convertToDTO(ClienteModel cliente) {
         ClienteDTO dto = new ClienteDTO();
         dto.setId(cliente.getId());
         dto.setNome(cliente.getNome());
-        dto.setTipo(cliente.getTipo().toString());
+        dto.setTipo(cliente.getTipo()); // Alterado: diretamente o enum
         dto.setEmail_principal(cliente.getEmail_principal());
         dto.setTelefone_principal(cliente.getTelefone_principal());
         dto.setSite(cliente.getSite());
@@ -73,17 +74,18 @@ public class ClienteService {
         dto.setCargo_contato(cliente.getCargo_contato());
         dto.setEmail_secundario(cliente.getEmail_secundario());
         dto.setTelefone_secundario(cliente.getTelefone_secundario());
-        dto.setCategoria(cliente.getCategoria().toString());
+        dto.setCategoria(cliente.getCategoria()); // Alterado: diretamente o enum
         dto.setObservacoes(cliente.getObservacoes());
         dto.setUsuario_id(cliente.getUsuario().getId());
         return dto;
     }
 
+    // No método convertToEntity
     private ClienteModel convertToEntity(ClienteDTO dto) {
         ClienteModel cliente = new ClienteModel();
         cliente.setId(dto.getId());
         cliente.setNome(dto.getNome());
-        cliente.setTipo(ClienteModel.TipoCliente.valueOf(dto.getTipo()));
+        cliente.setTipo(dto.getTipo()); // Alterado: não precisa mais de valueOf
         cliente.setEmail_principal(dto.getEmail_principal());
         cliente.setTelefone_principal(dto.getTelefone_principal());
         cliente.setSite(dto.getSite());
@@ -91,7 +93,7 @@ public class ClienteService {
         cliente.setCargo_contato(dto.getCargo_contato());
         cliente.setEmail_secundario(dto.getEmail_secundario());
         cliente.setTelefone_secundario(dto.getTelefone_secundario());
-        cliente.setCategoria(ClienteModel.CategoriaCliente.valueOf(dto.getCategoria()));
+        cliente.setCategoria(dto.getCategoria()); // Alterado: não precisa mais de valueOf
         cliente.setObservacoes(dto.getObservacoes());
         return cliente;
     }

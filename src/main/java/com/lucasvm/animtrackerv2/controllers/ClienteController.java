@@ -70,8 +70,29 @@ public class ClienteController {
         model.addAttribute("clientesPorLetra", clientesPorLetra);
         model.addAttribute("letrasDisponiveis", letrasDisponiveis);
 
-        model.addAttribute("clientesTipos", List.of(ClienteModel.TipoCliente.values()));
-        model.addAttribute("clientesCategorias", List.of(ClienteModel.CategoriaCliente.values()));
+        // Aqui está a correção - usando os enums diretamente
+        ClienteModel.TipoCliente[] tiposArray = ClienteModel.TipoCliente.values();
+        ClienteModel.CategoriaCliente[] categoriasArray = ClienteModel.CategoriaCliente.values();
+
+        model.addAttribute("clientesTipos", tiposArray);
+        model.addAttribute("clientesCategorias", categoriasArray);
+
+        // Criando os mapas de nome para exibição
+        Map<ClienteModel.TipoCliente, String> tiposDisplay = Arrays.stream(tiposArray)
+                .collect(Collectors.toMap(
+                        tipo -> tipo,  // A chave é o próprio enum
+                        ClienteModel.TipoCliente::getDisplayName
+                ));
+
+        Map<ClienteModel.CategoriaCliente, String> categoriasDisplay = Arrays.stream(categoriasArray)
+                .collect(Collectors.toMap(
+                        categoria -> categoria,  // A chave é o próprio enum
+                        ClienteModel.CategoriaCliente::getDisplayName
+                ));
+
+        model.addAttribute("tiposDisplay", tiposDisplay);
+        model.addAttribute("categoriasDisplay", categoriasDisplay);
+        model.addAttribute("usuario", usuarioAutenticado);
 
         return "views/clientes/principal";
     }
@@ -87,11 +108,13 @@ public class ClienteController {
             return "redirect:/login";
         }
 
-        List<ClienteModel.TipoCliente> tiposClientes = Arrays.asList(ClienteModel.TipoCliente.values());
-        model.addAttribute("tiposClientes", tiposClientes);
+        List<ClienteModel.TipoCliente> clientesTipos = Arrays.asList(ClienteModel.TipoCliente.values());
+        model.addAttribute("clientesTipos", clientesTipos);
 
         List<ClienteModel.CategoriaCliente> clientesCategorias = Arrays.asList(ClienteModel.CategoriaCliente.values());
         model.addAttribute("clientesCategorias", clientesCategorias);
+
+        model.addAttribute("usuario", usuarioAutenticado);
 
         return "views/clientes/criar";
     }
@@ -125,6 +148,15 @@ public class ClienteController {
 
         if (clienteOpt.isPresent()) {
             model.addAttribute("cliente", clienteOpt.get());
+            model.addAttribute("usuario", usuarioAutenticado);
+            Map<String, String> tiposDisplay = Arrays.stream(ClienteModel.TipoCliente.values())
+                    .collect(Collectors.toMap(Enum::name, ClienteModel.TipoCliente::getDisplayName));
+
+            Map<String, String> categoriasDisplay = Arrays.stream(ClienteModel.CategoriaCliente.values())
+                    .collect(Collectors.toMap(Enum::name, ClienteModel.CategoriaCliente::getDisplayName));
+
+            model.addAttribute("tiposDisplay", tiposDisplay);
+            model.addAttribute("categoriasDisplay", categoriasDisplay);
             return "views/clientes/detalhes";
         } else {
             return "views/clientes/nao-encontrado";
@@ -162,6 +194,8 @@ public class ClienteController {
 
             List<ClienteModel.CategoriaCliente> clientesCategorias = Arrays.asList(ClienteModel.CategoriaCliente.values());
             model.addAttribute("clientesCategorias", clientesCategorias);
+
+            model.addAttribute("usuario", usuarioAutenticado);
 
             return "views/clientes/editar";
         } else {

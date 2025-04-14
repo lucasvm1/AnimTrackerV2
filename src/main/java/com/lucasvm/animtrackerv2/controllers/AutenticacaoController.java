@@ -54,10 +54,17 @@ public class AutenticacaoController {
             @RequestParam String nome,
             @RequestParam String email,
             @RequestParam String senha,
+            @RequestParam String confirmarSenha,
             @RequestParam(required = false) String data_nascimento,
             RedirectAttributes redirectAttributes) {
 
         try {
+            // Check if passwords match
+            if (!senha.equals(confirmarSenha)) {
+                redirectAttributes.addFlashAttribute("erro", "As senhas não coincidem.");
+                return "redirect:/registro";
+            }
+
             if (usuarioService.existsByEmail(email)) {
                 redirectAttributes.addFlashAttribute("erro", "Este email já está em uso.");
                 return "redirect:/registro";
@@ -69,7 +76,12 @@ public class AutenticacaoController {
             usuarioDTO.setSenha(senha);
 
             if (data_nascimento != null && !data_nascimento.isEmpty()) {
-                usuarioDTO.setData_nascimento(LocalDate.parse(data_nascimento));
+                try {
+                    usuarioDTO.setData_nascimento(LocalDate.parse(data_nascimento));
+                } catch (Exception e) {
+                    // Log the error but continue with registration
+                    System.err.println("Erro ao converter data: " + e.getMessage());
+                }
             }
 
             usuarioDTO.setStatus("ATIVO");
@@ -81,6 +93,7 @@ public class AutenticacaoController {
             return "redirect:/login";
 
         } catch (Exception e) {
+            e.printStackTrace(); // Add this to see detailed error in logs
             redirectAttributes.addFlashAttribute("erro", "Erro ao criar conta: " + e.getMessage());
             return "redirect:/registro";
         }

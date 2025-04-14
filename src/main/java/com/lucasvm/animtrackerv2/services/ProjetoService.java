@@ -71,12 +71,13 @@ public class ProjetoService {
     }
 
 
+    // No método convertToDTO
     public ProjetoDTO convertToDTO(ProjetoModel projeto) {
         ProjetoDTO dto = new ProjetoDTO();
         dto.setId(projeto.getId());
         dto.setNome(projeto.getNome());
         dto.setDescricao(projeto.getDescricao());
-        dto.setStatus(projeto.getStatus().toString());
+        dto.setStatus(projeto.getStatus()); // Alterado: diretamente o enum
         dto.setData_inicio(projeto.getData_inicio());
         dto.setData_previsao(projeto.getData_previsao());
         dto.setData_conclusao(projeto.getData_conclusao());
@@ -90,12 +91,13 @@ public class ProjetoService {
         return dto;
     }
 
+    // No método convertToEntity
     public ProjetoModel convertToEntity(ProjetoDTO dto) {
         ProjetoModel projeto = new ProjetoModel();
         projeto.setId(dto.getId());
         projeto.setNome(dto.getNome());
         projeto.setDescricao(dto.getDescricao());
-        projeto.setStatus(ProjetoModel.statusProjeto.valueOf(dto.getStatus()));
+        projeto.setStatus(dto.getStatus()); // Alterado: não precisa mais de valueOf
         projeto.setData_inicio(dto.getData_inicio());
         projeto.setData_previsao(dto.getData_previsao());
         projeto.setData_conclusao(dto.getData_conclusao());

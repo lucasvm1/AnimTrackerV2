@@ -51,7 +51,7 @@ body {
 /* Footer Brand com gradiente */
 .at-footer__brand {
     font-weight: 700;
-    background: var(--primary-gradient);
+    background: var(--primary-gradient); !important;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent !important;
