@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+  <link rel="stylesheet" th:href="@{/css/componentes/header.css}">
+  <link rel="stylesheet" th:href="@{/css/componentes/footer.css}">
+  <link rel="stylesheet" th:href="@{/css/projetos/criar.css}">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+
+  <title>AnimTracker - Criar Projeto</title>
+  <meta name="_csrf" th:if="${_csrf != null}" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:if="${_csrf != null}" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+
+<div th:replace="~{componentes/header :: header('projetos')}"></div>
+<div class="content">
+  <main>
+    <div class="at-projeto__page-container">
+      <div class="at-projeto__container-fluid">
+        <!-- Adicionar alertas para feedback ao usuário -->
+        <div th:if="${erro}" class="alert alert-danger mt-3" role="alert">
+          <i class="bi bi-exclamation-triangle"></i> <span th:text="${erro}"></span>
+        </div>
+        <div th:if="${sucesso}" class="alert alert-success mt-3" role="alert">
+          <i class="bi bi-check-circle"></i> <span th:text="${sucesso}"></span>
+        </div>
+
+        <form th:action="@{/projeto/criar}" method="post">
+          <div class="at-projeto__acoes-container">
+            <button type="submit" class="btn btn-primary at-projeto__btn-primary me-3">
+              <i class="bi bi-check-circle"></i> Salvar
+            </button>
+            <a class="btn btn-primary at-projeto__btn-primary" th:href="@{/projetos}">
+              <i class="bi bi-x-circle"></i> Cancelar
+            </a>
+          </div>
+          <div class="card at-projeto__card">
+            <div class="at-projeto__bg-gradiente">
+              <div class="text-center">
+                <div class="at-projeto__icone">
+                  <i class="bi bi-file-earmark-play"></i>
+                </div>
+                <h2 class="at-projeto__nome">Novo Projeto</h2>
+              </div>
+            </div>
+
+            <div class="at-projeto__info-container">
+              <h3 class="at-projeto__secao-titulo">Informações Principais</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="at-projeto__info-label">Nome<span class="text-danger">*</span></p>
+                  <input type="text" id="nome" name="nome"
+                         class="form-control at-projeto__info-valor border-0 p-0"
+                         placeholder="Nome do Projeto" required
+                         th:value="${projeto != null ? projeto.nome : ''}">
+                </div>
+                <div class="col-md-6">
+                  <p class="at-projeto__info-label">Status<span class="text-danger">*</span></p>
+                  <select id="status" name="status"
+                          class="form-select at-projeto__info-valor border-0 p-0" required>
+                    <option value="">-- Selecione um Status --</option>
+                    <option th:each="status : ${statusProjeto}" th:value="${status.name()}"
+                            th:text="${status.getDisplayName()}"
+                            th:selected="${projeto != null && projeto.status == status}">Status
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <p class="at-projeto__info-label">Descrição</p>
+                  <textarea id="descricao" name="descricao"
+                            class="form-control at-projeto__info-valor border-0 p-0" rows="3"
+                            placeholder="Descrição do projeto..."
+                            th:text="${projeto != null ? projeto.descricao : ''}"></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="at-projeto__info-label">Data de Início</p>
+                  <input type="date" id="data_inicio" name="data_inicio"
+                         class="form-control at-projeto__info-valor border-0 p-0"
+                         th:value="${projeto != null && projeto.data_inicio != null ? #temporals.format(projeto.data_inicio, 'yyyy-MM-dd''T''HH:mm') : ''}">
+                </div>
+                <div class="col-md-6">
+                  <p class="at-projeto__info-label">Previsão de Conclusão</p>
+                  <input type="date" id="data_previsao" name="data_previsao"
+                         class="form-control at-projeto__info-valor border-0 p-0"
+                         th:value="${projeto != null && projeto.data_previsao != null ? #temporals.format(projeto.data_previsao, 'yyyy-MM-dd''T''HH:mm') : ''}">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="at-projeto__info-label">Data de Conclusão</p>
+                  <input type="date" id="data_conclusao" name="data_conclusao"
+                         class="form-control at-projeto__info-valor border-0 p-0"
+                         th:value="${projeto != null && projeto.data_conclusao != null ? #temporals.format(projeto.data_conclusao, 'yyyy-MM-dd''T''HH:mm') : ''}">
+                </div>
+                <div class="col-md-6">
+                  <p class="at-projeto__info-label">Tipo de Animação<span class="text-danger">*</span></p>
+                  <select id="tipo_animacao" name="tipo_animacao"
+                          class="form-select at-projeto__info-valor border-0 p-0" required>
+                    <option value="">-- Selecione um Tipo de Animação --</option>
+                    <option th:each="tipo : ${tipoAnimacao}" th:value="${tipo.name()}"
+                            th:text="${tipo.getDisplayName()}"
+                            th:selected="${projeto != null && projeto.tipo_animacao == tipo}">Tipo de Animação
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="at-projeto__info-label">Duração (segundos)</p>
+                  <input type="number" id="duracao_segundos" name="duracao_segundos"
+                         class="form-control at-projeto__info-valor border-0 p-0"
+                         placeholder="Duração em segundos"
+                         th:value="${projeto != null ? projeto.duracao_segundos : ''}">
+                </div>
+                <div class="col-md-6">
+                  <p class="at-projeto__info-label">Cliente<span class="text-danger">*</span></p>
+                  <select id="cliente_id" name="cliente_id"
+                          class="form-select at-projeto__info-valor border-0 p-0" required>
+                    <option value="">-- Selecione um Cliente --</option>
+                    <option th:each="cliente : ${clientes}"
+                            th:value="${cliente.id}"
+                            th:text="${cliente.nome}"
+                            th:selected="${projeto != null && projeto.cliente_id == cliente.id}">
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <h3 class="at-projeto__secao-titulo">Detalhes Adicionais</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="at-projeto__info-label">Responsável</p>
+                  <input type="text" id="responsavel" name="responsavel"
+                         class="form-control at-projeto__info-valor border-0 p-0"
+                         placeholder="Nome do Responsável"
+                         th:value="${projeto != null ? projeto.responsavel : ''}">
+                </div>
+                <div class="col-md-6">
+                  <p class="at-projeto__info-label">Pasta de Arquivos</p>
+                  <input type="text" id="pasta_arquivos" name="pasta_arquivos"
+                         class="form-control at-projeto__info-valor border-0 p-0"
+                         placeholder="Caminho da pasta"
+                         th:value="${projeto != null ? projeto.pasta_arquivos : ''}">
+                </div>
+              </div>
+
+              <h3 class="at-projeto__secao-titulo">Observações</h3>
+              <textarea id="observacoes" name="observacoes"
+                        class="form-control at-projeto__info-valor border-0 p-0" rows="3"
+                        placeholder="Observações sobre o projeto..."
+                        th:text="${projeto != null ? projeto.observacoes : ''}"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer th:replace="~{componentes/footer :: footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Validação do formulário
+    const formEl = document.querySelector('form');
+    formEl?.addEventListener('submit', function(event) {
+      // Validação básica de campos obrigatórios
+      const requiredFields = ['nome', 'status', 'tipo_animacao', 'cliente_id'];
+      let valid = true;
+
+      requiredFields.forEach(field => {
+        const input = document.getElementById(field);
+        if (input && !input.value.trim()) {
+          input.classList.add('is-invalid');
+          valid = false;
+        } else if (input) {
+          input.classList.remove('is-invalid');
+        }
+      });
+
+      if (!valid) {
+        event.preventDefault();
+        alert('Por favor, preencha todos os campos obrigatórios.');
+      } else {
+        // Log dos dados do formulário para debug
+        console.log('Enviando formulário com os dados:', {
+          nome: document.getElementById('nome').value,
+          status: document.getElementById('status').value,
+          cliente_id: document.getElementById('cliente_id').value,
+          tipo_animacao: document.getElementById('tipo_animacao').value,
+          data_inicio: document.getElementById('data_inicio').value,
+          data_previsao: document.getElementById('data_previsao').value,
+          data_conclusao: document.getElementById('data_conclusao').value
+        });
+      }
+    });
+
+    // Highlight dos campos obrigatórios
+    const requiredFields = ['nome', 'status', 'tipo_animacao', 'cliente_id'];
+    requiredFields.forEach(field => {
+      const input = document.getElementById(field);
+      if (input) {
+        input.addEventListener('blur', function() {
+          if (!this.value.trim()) {
+            this.classList.add('is-invalid');
+          } else {
+            this.classList.remove('is-invalid');
+          }
+        });
+      }
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,8 +1,11 @@
 package com.lucasvm.animtrackerv2.controllers;
 
+import com.lucasvm.animtrackerv2.dtos.ClienteDTO;
 import com.lucasvm.animtrackerv2.dtos.ProjetoDTO;
+import com.lucasvm.animtrackerv2.models.ClienteModel;
 import com.lucasvm.animtrackerv2.models.ProjetoModel;
 import com.lucasvm.animtrackerv2.repositories.ProjetoRepository;
+import com.lucasvm.animtrackerv2.services.ClienteService;
 import com.lucasvm.animtrackerv2.services.ProjetoService;
 import com.lucasvm.animtrackerv2.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,8 @@ public class ProjetoController {
 
     @Autowired
     private ProjetoRepository projetoRepository;
+    @Autowired
+    private ClienteService clienteService;
 
     @GetMapping("/projetos")
     public String paginaProjetos(Principal principal, Model model) throws AccessDeniedException {
@@ -52,6 +57,9 @@ public class ProjetoController {
         List<ProjetoDTO> projetos = projetoService.listarTodosPorUsuario(usuarioAutenticado.getId());
         model.addAttribute("projetos", projetos);
 
+        List<ClienteDTO> clientes = clienteService.listarTodosPorUsuario(usuarioAutenticado.getId());
+        model.addAttribute("clientes", clientes);
+
         Map<ProjetoModel.statusProjeto, List<ProjetoDTO>> projetosPorStatus = statusProjetosOrdenados.stream()
                 .collect(Collectors.toMap(
                         status -> status,
@@ -68,7 +76,7 @@ public class ProjetoController {
         return "views/projetos/principal";
     }
 
-    @GetMapping("/projetos/criar")
+    @GetMapping("/projeto/criar")
     public String paginaCriarProjeto(Principal principal, Model model) throws AccessDeniedException {
 
         var usuarioAutenticado = usuarioService.getUsuarioAutenticado(principal);
@@ -85,12 +93,15 @@ public class ProjetoController {
         List<ProjetoModel.statusProjeto> statusProjeto = List.of(ProjetoModel.statusProjeto.values());
         model.addAttribute("statusProjeto", statusProjeto);
 
+        List<ClienteDTO> clientes = clienteService.listarTodosPorUsuario(usuarioAutenticado.getId());
+        model.addAttribute("clientes", clientes);
+
         model.addAttribute("usuario", usuarioAutenticado);
 
         return "views/projetos/criar";
     }
 
-    @PostMapping("/projetos/criar")
+    @PostMapping("/projeto/criar")
     public String criarProjeto(@ModelAttribute ProjetoDTO projetoDTO, Principal principal) throws AccessDeniedException {
 
         var usuarioAutenticado = usuarioService.getUsuarioAutenticado(principal);
@@ -101,7 +112,7 @@ public class ProjetoController {
             return "redirect:/login";
         }
 
-        projetoService.salvar(projetoDTO, usuarioAutenticado.getId());
+        projetoService.salvar(projetoDTO, projetoDTO.getCliente_id());
 
 
         return "redirect:/projetos";
