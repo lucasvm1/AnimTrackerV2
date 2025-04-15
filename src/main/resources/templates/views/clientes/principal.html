@@ -93,7 +93,7 @@
                                     <h3 th:id="'grupo-' + ${letra}" class="mt-4 mb-3 pb-2 at-clientes__grupo-letra"
                                         th:text="${letra}">A</h3>
 
-                                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
 
                                         <div class="col" th:each="cliente : ${clientesPorLetra.get(letra)}">
                                             <div class="card h-100 shadow-sm at-clientes__card">
@@ -101,7 +101,7 @@
 
                                                     <div class="d-flex justify-content-between align-items-start mb-3">
                                                         <div class="at-clientes__cliente-header me-2">
-                                                            <h5 class="card-title mb-1" th:text="${cliente.nome}">Nome
+                                                            <h5 class="card-title mb-3" th:text="${cliente.nome}">Nome
                                                                 do Cliente</h5>
                                                             <div class="d-flex flex-wrap gap-2 mb-0">
                                                                 <span class="badge at-clientes__badge-categoria"
@@ -126,7 +126,7 @@
                                                                 </li>
                                                                 <li>
                                                                     <a class="dropdown-item"
-                                                                       th:href="@{/projetos/novo/{clienteId}(clienteId=${cliente.id})}">
+                                                                       th:href="@{/projeto/criar}">
                                                                         <i class="bi bi-plus-circle"></i> Novo Projeto
                                                                     </a>
                                                                 </li>
@@ -144,11 +144,13 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="at-clientes__info-container mb-4">
+                                                    <div class="at-clientes__info-container mb-3">
                                                         <div class="at-clientes__info-item">
                                                             <i class="bi bi-telephone"></i>
                                                             <span class="text-body-secondary me-1"
-                                                                  th:text="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty() ? cliente.telefone_principal : 'Não informado'}">Telefone</span>
+                                                                  th:text="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty() ? cliente.telefone_principal : 'Não informado'}"
+                                                                  th:data-clipboard="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty() ? cliente.telefone_principal : ''}"
+                                                                  th:title="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty() ? 'Clique para copiar' : ''}">Telefone</span>
                                                             <button class="btn btn-sm p-0 ms-auto at-clientes__copy-btn"
                                                                     th:if="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty()}"
                                                                     th:data-clipboard="${cliente.telefone_principal}"
@@ -159,8 +161,11 @@
                                                         </div>
                                                         <div class="at-clientes__info-item">
                                                             <i class="bi bi-envelope"></i>
-                                                            <span class="text-body-secondary me-1 text-truncate"
-                                                                  th:text="${cliente.email_principal != null and !cliente.email_principal.isEmpty() ? cliente.email_principal : 'Não informado'}">Email</span>
+                                                            <span class="text-body-secondary me-1"
+                                                                  style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                                                                  th:text="${cliente.email_principal != null and !cliente.email_principal.isEmpty() ? cliente.email_principal : 'Não informado'}"
+                                                                  th:data-clipboard="${cliente.email_principal != null and !cliente.email_principal.isEmpty() ? cliente.email_principal : ''}"
+                                                                  th:title="${cliente.email_principal != null and !cliente.email_principal.isEmpty() ? 'Clique para copiar' : ''}">Email</span>
                                                             <button class="btn btn-sm p-0 ms-auto at-clientes__copy-btn"
                                                                     th:if="${cliente.email_principal != null and !cliente.email_principal.isEmpty()}"
                                                                     th:data-clipboard="${cliente.email_principal}"
@@ -171,10 +176,8 @@
                                                         <div class="at-clientes__info-item at-clientes__projetos-counter mt-1"
                                                              th:if="${clienteProjetos != null}">
                                                             <i class="bi bi-folder"></i>
-                                                            <span class="text-body-secondary">
-                                                                <span th:text="${#maps.containsKey(clienteProjetos, cliente.id) ? #lists.size(clienteProjetos[cliente.id]) : '0'}">0</span>
-                                                                projetos
-                                                            </span>
+                                                            <span class="text-body-secondary"><span
+                                                                    th:text="${#maps.containsKey(clienteProjetos, cliente.id) ? #lists.size(clienteProjetos[cliente.id]) : '0'}">0</span>projetos</span>
                                                         </div>
                                                     </div>
 
@@ -290,19 +293,29 @@
         // --- Copy to Clipboard ---
         const copyToastEl = document.getElementById('copyToast');
         const copyToast = bootstrap.Toast.getOrCreateInstance(copyToastEl);
-        const copyButtons = document.querySelectorAll('.at-clientes__copy-btn');
 
-        copyButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const textToCopy = this.getAttribute('data-clipboard');
-                if (textToCopy && navigator.clipboard) {
-                    navigator.clipboard.writeText(textToCopy).then(() => {
-                        copyToast.show();
-                    }).catch(err => {
-                        console.error('Erro ao copiar:', err);
-                    });
-                }
-            });
+        // Selecionando todos os elementos copiáveis (botões e textos)
+        const copyableElements = document.querySelectorAll('[data-clipboard]');
+
+        // Função para copiar texto
+        function copyToClipboard(text) {
+            if (text && text.trim() !== '' && navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    copyToast.show();
+                }).catch(err => {
+                    console.error('Erro ao copiar:', err);
+                });
+            }
+        }
+
+        // Adicionando evento a todos elementos copiáveis
+        copyableElements.forEach(element => {
+            const textToCopy = element.getAttribute('data-clipboard');
+            if (textToCopy && textToCopy.trim() !== '') {
+                element.addEventListener('click', function () {
+                    copyToClipboard(textToCopy);
+                });
+            }
         });
 
         // --- Client Filtering ---

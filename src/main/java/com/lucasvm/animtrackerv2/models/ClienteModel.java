@@ -79,8 +79,17 @@ public class ClienteModel implements Serializable {
     @Getter
     public enum CategoriaCliente {
         CINEMA("Cinema"),
+        STREAMING("Streaming"),
         JOGOS("Jogos"),
         PUBLICIDADE("Publicidade"),
+        YOUTUBE("YouTube"),
+        REDES_SOCIAIS("Redes Sociais"),
+        EDUCACAO("Educação"),
+        CORPORATIVO("Corporativo"),
+        TECNOLOGIA("Tecnologia"),
+        EVENTOS("Eventos"),
+        MUSICA("Música"),
+        MARKETING_DIGITAL("Marketing Digital"),
         OUTROS("Outros");
 
         private final String displayName;
@@ -88,7 +97,12 @@ public class ClienteModel implements Serializable {
         CategoriaCliente(String displayName) {
             this.displayName = displayName;
         }
+
+        public String getDisplayName() {
+            return displayName;
+        }
     }
+
 
 
 }

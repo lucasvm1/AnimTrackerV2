@@ -78,11 +78,13 @@ public class ProjetoModel implements Serializable {
     }
 
     public enum tipoAnimacao {
-        TRADICIONAL("Tradicional"),
+        TRADICIONAL("Animação Tradicional"),
         ANIMACAO_2D("Animação 2D"),
         ANIMACAO_3D("Animação 3D"),
         MOTION_GRAPHICS("Motion Graphics"),
-        STOP_MOTION("Stop Motion");
+        STOP_MOTION("Stop Motion"),
+        CUTOUT("Cutout"),
+        OUTROS("Outros");
 
         private final String displayName;
 
