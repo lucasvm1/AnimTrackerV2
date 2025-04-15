@@ -183,11 +183,18 @@ small {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.25rem 0;
+    padding: 0.4rem;
     border-radius: 4px;
     transition: var(--transition);
     background-color: transparent;
     min-height: 30px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.at-clientes__info-item:hover {
+    background-color: rgba(166, 75, 162, 0.1) !important;
 }
 
 .at-clientes__info-item i {
@@ -207,6 +214,24 @@ small {
     color: rgba(255, 255, 255, 0.6) !important;
 }
 
+/* Estilos para textos copiáveis - NOVA ABORDAGEM */
+.at-clientes__copyable-text {
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+/* Mudança de cor do texto no hover */
+.at-clientes__info-item:hover .text-body-secondary {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Efeito de feedback ao clicar */
+.at-clientes__copyable-text:active,
+.at-clientes__info-item .text-body-secondary:active {
+    color: var(--accent-color) !important;
+}
+
 .at-clientes__projetos-counter {}
 
 .at-clientes__copy-btn {
@@ -218,6 +243,7 @@ small {
     padding: 0 0.25rem;
     background: none;
     border: none;
+    cursor: pointer;
 }
 
 .at-clientes__info-item:hover .at-clientes__copy-btn {
@@ -502,6 +528,16 @@ small {
 
 footer {
     flex-shrink: 0;
+}
+
+/* Efeito de feedback de cópia */
+@keyframes flash-copy {
+    0% { background-color: rgba(166, 75, 162, 0.4); }
+    100% { background-color: rgba(166, 75, 162, 0.1); }
+}
+
+.copy-flash {
+    animation: flash-copy 0.5s ease;
 }
 
 @media (max-width: 767.98px) {
