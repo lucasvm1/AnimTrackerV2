@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -32,11 +33,11 @@ public class ProjetoModel implements Serializable {
     @Column(nullable = false)
     private statusProjeto status;
 
-    private LocalDateTime data_inicio;
+    private LocalDate data_inicio;
 
-    private LocalDateTime data_previsao;
+    private LocalDate data_previsao;
 
-    private LocalDateTime data_conclusao;
+    private LocalDate data_conclusao;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

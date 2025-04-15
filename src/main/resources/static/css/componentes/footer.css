@@ -54,7 +54,7 @@ body {
     background: var(--primary-gradient); !important;
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent !important;
+    color: var(--text-color);
     font-size: 1.2rem;
     text-decoration: none;
     margin-bottom: 5px;

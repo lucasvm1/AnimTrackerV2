@@ -88,153 +88,155 @@
                     <div class="container-fluid mt-4">
                         <div class="row">
                             <div class="col-lg-12">
+                                <!-- Área de exibição de clientes agrupados por letra -->
+                                <div id="clientes-content">
+                                    <div th:each="letra : ${letrasDisponiveis}">
+                                        <h3 th:id="'grupo-' + ${letra}" class="mt-4 mb-3 pb-2 at-clientes__grupo-letra"
+                                            th:text="${letra}">A</h3>
 
-                                <div th:each="letra : ${letrasDisponiveis}">
-                                    <h3 th:id="'grupo-' + ${letra}" class="mt-4 mb-3 pb-2 at-clientes__grupo-letra"
-                                        th:text="${letra}">A</h3>
+                                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
 
-                                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                                            <div class="col" th:each="cliente : ${clientesPorLetra.get(letra)}">
+                                                <div class="card h-100 shadow-sm at-clientes__card">
+                                                    <div class="card-body d-flex flex-column p-3">
 
-                                        <div class="col" th:each="cliente : ${clientesPorLetra.get(letra)}">
-                                            <div class="card h-100 shadow-sm at-clientes__card">
-                                                <div class="card-body d-flex flex-column p-3">
-
-                                                    <div class="d-flex justify-content-between align-items-start mb-3">
-                                                        <div class="at-clientes__cliente-header me-2">
-                                                            <h5 class="card-title mb-3" th:text="${cliente.nome}">Nome
-                                                                do Cliente</h5>
-                                                            <div class="d-flex flex-wrap gap-2 mb-0">
-                                                                <span class="badge at-clientes__badge-categoria"
-                                                                      th:text="${cliente.categoria != null ? cliente.categoria.displayName : 'Não definido'}">Categoria</span>
-                                                                <span class="badge at-clientes__badge-tipo"
-                                                                      th:text="${cliente.tipo != null ? cliente.tipo.displayName : 'Não definido'}">Tipo</span>
+                                                        <div class="d-flex justify-content-between align-items-start mb-3">
+                                                            <div class="at-clientes__cliente-header me-2">
+                                                                <h5 class="card-title mb-3" th:text="${cliente.nome}">Nome
+                                                                    do Cliente</h5>
+                                                                <div class="d-flex flex-wrap gap-2 mb-0">
+                                                                    <span class="badge at-clientes__badge-categoria"
+                                                                          th:text="${cliente.categoria != null ? cliente.categoria.displayName : 'Não definido'}">Categoria</span>
+                                                                    <span class="badge at-clientes__badge-tipo"
+                                                                          th:text="${cliente.tipo != null ? cliente.tipo.displayName : 'Não definido'}">Tipo</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="dropdown">
+                                                                <button class="btn btn-sm btn-link text-light p-0 at-clientes__menu-dots"
+                                                                        type="button" data-bs-toggle="dropdown"
+                                                                        aria-expanded="false"
+                                                                        aria-label="Opções do Cliente">
+                                                                    <i class="bi bi-three-dots-vertical"></i>
+                                                                </button>
+                                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                                    <li>
+                                                                        <a class="dropdown-item"
+                                                                           th:href="@{/cliente/editar/{id}(id=${cliente.id})}">
+                                                                            <i class="bi bi-pencil-square"></i> Editar
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a class="dropdown-item"
+                                                                           th:href="@{/projeto/criar}">
+                                                                            <i class="bi bi-plus-circle"></i> Novo Projeto
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <hr class="dropdown-divider">
+                                                                    </li>
+                                                                    <li>
+                                                                        <a class="dropdown-item text-danger" href="#"
+                                                                           data-bs-toggle="modal"
+                                                                           th:data-bs-target="'#confirmarExclusao' + ${cliente.id}">
+                                                                            <i class="bi bi-trash"></i> Excluir
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
                                                         </div>
-                                                        <div class="dropdown">
-                                                            <button class="btn btn-sm btn-link text-light p-0 at-clientes__menu-dots"
-                                                                    type="button" data-bs-toggle="dropdown"
-                                                                    aria-expanded="false"
-                                                                    aria-label="Opções do Cliente">
-                                                                <i class="bi bi-three-dots-vertical"></i>
-                                                            </button>
-                                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                                <li>
-                                                                    <a class="dropdown-item"
-                                                                       th:href="@{/cliente/editar/{id}(id=${cliente.id})}">
-                                                                        <i class="bi bi-pencil-square"></i> Editar
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a class="dropdown-item"
-                                                                       th:href="@{/projeto/criar}">
-                                                                        <i class="bi bi-plus-circle"></i> Novo Projeto
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <hr class="dropdown-divider">
-                                                                </li>
-                                                                <li>
-                                                                    <a class="dropdown-item text-danger" href="#"
-                                                                       data-bs-toggle="modal"
-                                                                       th:data-bs-target="'#confirmarExclusao' + ${cliente.id}">
-                                                                        <i class="bi bi-trash"></i> Excluir
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="at-clientes__info-container mb-3">
-                                                        <div class="at-clientes__info-item">
-                                                            <i class="bi bi-telephone"></i>
-                                                            <span class="text-body-secondary me-1"
-                                                                  th:text="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty() ? cliente.telefone_principal : 'Não informado'}"
-                                                                  th:data-clipboard="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty() ? cliente.telefone_principal : ''}"
-                                                                  th:title="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty() ? 'Clique para copiar' : ''}">Telefone</span>
-                                                            <button class="btn btn-sm p-0 ms-auto at-clientes__copy-btn"
-                                                                    th:if="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty()}"
-                                                                    th:data-clipboard="${cliente.telefone_principal}"
-                                                                    title="Copiar telefone"
-                                                                    aria-label="Copiar telefone">
-                                                                <i class="bi bi-clipboard"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="at-clientes__info-item">
-                                                            <i class="bi bi-envelope"></i>
-                                                            <span class="text-body-secondary me-1"
-                                                                  style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-                                                                  th:text="${cliente.email_principal != null and !cliente.email_principal.isEmpty() ? cliente.email_principal : 'Não informado'}"
-                                                                  th:data-clipboard="${cliente.email_principal != null and !cliente.email_principal.isEmpty() ? cliente.email_principal : ''}"
-                                                                  th:title="${cliente.email_principal != null and !cliente.email_principal.isEmpty() ? 'Clique para copiar' : ''}">Email</span>
-                                                            <button class="btn btn-sm p-0 ms-auto at-clientes__copy-btn"
-                                                                    th:if="${cliente.email_principal != null and !cliente.email_principal.isEmpty()}"
-                                                                    th:data-clipboard="${cliente.email_principal}"
-                                                                    title="Copiar email" aria-label="Copiar email">
-                                                                <i class="bi bi-clipboard"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="at-clientes__info-item at-clientes__projetos-counter mt-1"
-                                                             th:if="${clienteProjetos != null}">
-                                                            <i class="bi bi-folder"></i>
-                                                            <span class="text-body-secondary"><span
-                                                                    th:text="${#maps.containsKey(clienteProjetos, cliente.id) ? #lists.size(clienteProjetos[cliente.id]) : '0'}">0</span>projetos</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="mt-auto d-flex flex-wrap gap-2 at-clientes__card-actions">
-                                                        <a class="btn btn-primary at-clientes__btn-primary flex-grow-1"
-                                                           th:href="@{/cliente/{id}(id=${cliente.id})}">
-                                                            <i class="bi bi-eye me-1"></i> Detalhes
-                                                        </a>
-                                                        <a th:if="${cliente.email_principal != null and !cliente.email_principal.isEmpty()}"
-                                                           class="btn at-clientes__btn-icon"
-                                                           th:href="'mailto:' + ${cliente.email_principal}"
-                                                           title="Enviar e-mail" aria-label="Enviar e-mail">
-                                                            <i class="bi bi-envelope"></i>
-                                                        </a>
-                                                        <a th:if="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty()}"
-                                                           class="btn at-clientes__btn-icon"
-                                                           th:href="'tel:' + ${cliente.telefone_principal}"
-                                                           title="Ligar" aria-label="Ligar">
-                                                            <i class="bi bi-telephone"></i>
-                                                        </a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                            <div class="modal fade" th:id="'confirmarExclusao' + ${cliente.id}"
-                                                 tabindex="-1"
-                                                 th:aria-labelledby="'confirmarExclusaoLabel' + ${cliente.id}"
-                                                 aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title"
-                                                                th:id="'confirmarExclusaoLabel' + ${cliente.id}">
-                                                                Confirmar exclusão</h5>
-                                                            <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal"
-                                                                    aria-label="Fechar"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Você tem certeza que deseja excluir o cliente <strong
-                                                                th:text="${cliente.nome}">Nome do Cliente</strong>?
-                                                            <p class="mt-2">Isso apagará todos os projetos e cenas
-                                                                relacionadas a esse cliente!</p>
-                                                            <p class="text-danger mt-2"><strong>Atenção:</strong> Esta
-                                                                ação não pode ser desfeita.</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Cancelar
-                                                            </button>
-                                                            <form th:action="@{/cliente/remover/{id}(id=${cliente.id})}"
-                                                                  method="post" style="display:inline;">
-                                                                <button type="submit" class="btn btn-danger">Excluir
-                                                                    Permanentemente
+                                                        <div class="at-clientes__info-container mb-3">
+                                                            <div class="at-clientes__info-item">
+                                                                <i class="bi bi-telephone"></i>
+                                                                <span class="text-body-secondary me-1"
+                                                                      th:text="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty() ? cliente.telefone_principal : 'Não informado'}"
+                                                                      th:data-clipboard="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty() ? cliente.telefone_principal : ''}"
+                                                                      th:title="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty() ? 'Clique para copiar' : ''}">Telefone</span>
+                                                                <button class="btn btn-sm p-0 ms-auto at-clientes__copy-btn"
+                                                                        th:if="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty()}"
+                                                                        th:data-clipboard="${cliente.telefone_principal}"
+                                                                        title="Copiar telefone"
+                                                                        aria-label="Copiar telefone">
+                                                                    <i class="bi bi-clipboard"></i>
                                                                 </button>
-                                                            </form>
+                                                            </div>
+                                                            <div class="at-clientes__info-item">
+                                                                <i class="bi bi-envelope"></i>
+                                                                <span class="text-body-secondary me-1"
+                                                                      style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                                                                      th:text="${cliente.email_principal != null and !cliente.email_principal.isEmpty() ? cliente.email_principal : 'Não informado'}"
+                                                                      th:data-clipboard="${cliente.email_principal != null and !cliente.email_principal.isEmpty() ? cliente.email_principal : ''}"
+                                                                      th:title="${cliente.email_principal != null and !cliente.email_principal.isEmpty() ? 'Clique para copiar' : ''}">Email</span>
+                                                                <button class="btn btn-sm p-0 ms-auto at-clientes__copy-btn"
+                                                                        th:if="${cliente.email_principal != null and !cliente.email_principal.isEmpty()}"
+                                                                        th:data-clipboard="${cliente.email_principal}"
+                                                                        title="Copiar email" aria-label="Copiar email">
+                                                                    <i class="bi bi-clipboard"></i>
+                                                                </button>
+                                                            </div>
+                                                            <div class="at-clientes__info-item at-clientes__projetos-counter mt-1"
+                                                                 th:if="${clienteProjetos != null}">
+                                                                <i class="bi bi-folder"></i>
+                                                                <span class="text-body-secondary"><span
+                                                                        th:text="${#maps.containsKey(clienteProjetos, cliente.id) ? #lists.size(clienteProjetos[cliente.id]) : '0'}">0</span> projetos</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mt-auto d-flex flex-wrap gap-2 at-clientes__card-actions">
+                                                            <a class="btn btn-primary at-clientes__btn-primary flex-grow-1"
+                                                               th:href="@{/cliente/{id}(id=${cliente.id})}">
+                                                                <i class="bi bi-eye me-1"></i> Detalhes
+                                                            </a>
+                                                            <a th:if="${cliente.email_principal != null and !cliente.email_principal.isEmpty()}"
+                                                               class="btn at-clientes__btn-icon"
+                                                               th:href="'mailto:' + ${cliente.email_principal}"
+                                                               title="Enviar e-mail" aria-label="Enviar e-mail">
+                                                                <i class="bi bi-envelope"></i>
+                                                            </a>
+                                                            <a th:if="${cliente.telefone_principal != null and !cliente.telefone_principal.isEmpty()}"
+                                                               class="btn at-clientes__btn-icon"
+                                                               th:href="'tel:' + ${cliente.telefone_principal}"
+                                                               title="Ligar" aria-label="Ligar">
+                                                                <i class="bi bi-telephone"></i>
+                                                            </a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal fade" th:id="'confirmarExclusao' + ${cliente.id}"
+                                                     tabindex="-1"
+                                                     th:aria-labelledby="'confirmarExclusaoLabel' + ${cliente.id}"
+                                                     aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title"
+                                                                    th:id="'confirmarExclusaoLabel' + ${cliente.id}">
+                                                                    Confirmar exclusão</h5>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Fechar"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Você tem certeza que deseja excluir o cliente <strong
+                                                                    th:text="${cliente.nome}">Nome do Cliente</strong>?
+                                                                <p class="mt-2">Isso apagará todos os projetos e cenas
+                                                                    relacionadas a esse cliente!</p>
+                                                                <p class="text-danger mt-2"><strong>Atenção:</strong> Esta
+                                                                    ação não pode ser desfeita.</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Cancelar
+                                                                </button>
+                                                                <form th:action="@{/cliente/remover/{id}(id=${cliente.id})}"
+                                                                      method="post" style="display:inline;">
+                                                                    <button type="submit" class="btn btn-danger">Excluir
+                                                                        Permanentemente
+                                                                    </button>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -243,8 +245,9 @@
                                     </div>
                                 </div>
 
+                                <!-- Estado vazio - movido para FORA do loop de letras -->
                                 <div class="container text-center py-5 mt-5 at-clientes__empty-container"
-                                     th:if="${#lists.isEmpty(clientesPorLetra)}">
+                                     th:if="${#maps.isEmpty(clientesPorLetra) || #lists.isEmpty(letrasDisponiveis)}">
                                     <div class="p-4">
                                         <i class="bi bi-person-bounding-box mb-3 at-clientes__empty-icon"></i>
                                         <h4 class="mb-3">Nenhum cliente encontrado</h4>
@@ -255,6 +258,20 @@
                                                class="btn btn-primary at-clientes__btn-primary">
                                                 <i class="bi bi-plus-circle me-2"></i>Adicionar Primeiro Cliente
                                             </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Estado vazio para filtros sem resultados - controlado por JavaScript -->
+                                <div id="noResultsContainer" class="container text-center py-5 mt-5 at-clientes__empty-container" style="display: none;">
+                                    <div class="p-4">
+                                        <i class="bi bi-search mb-3 at-clientes__empty-icon"></i>
+                                        <h4 class="mb-3">Nenhum cliente encontrado</h4>
+                                        <p class="text-body-secondary mb-4">Sua busca não retornou resultados. Tente mudar os filtros ou adicionar novos clientes.</p>
+                                        <div class="d-grid gap-2 col-md-6 mx-auto">
+                                            <button id="resetFiltersBtn" class="btn btn-primary at-clientes__btn-primary">
+                                                <i class="bi bi-arrow-counterclockwise me-2"></i>Limpar Filtros
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -290,14 +307,14 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // --- Copy to Clipboard ---
+        // Toast de cópia
         const copyToastEl = document.getElementById('copyToast');
         const copyToast = bootstrap.Toast.getOrCreateInstance(copyToastEl);
 
-        // Selecionando todos os elementos copiáveis (botões e textos)
+        // Seleciona todos os elementos com dados para copiar
         const copyableElements = document.querySelectorAll('[data-clipboard]');
 
-        // Função para copiar texto
+        // Função que copia texto para a área de transferência
         function copyToClipboard(text) {
             if (text && text.trim() !== '' && navigator.clipboard) {
                 navigator.clipboard.writeText(text).then(() => {
@@ -308,7 +325,7 @@
             }
         }
 
-        // Adicionando evento a todos elementos copiáveis
+        // Aplica a função de cópia a todos os elementos clicáveis
         copyableElements.forEach(element => {
             const textToCopy = element.getAttribute('data-clipboard');
             if (textToCopy && textToCopy.trim() !== '') {
@@ -318,36 +335,45 @@
             }
         });
 
-        // --- Client Filtering ---
+        // Filtros (nome, categoria, tipo)
         const searchInput = document.getElementById('searchInput');
         const categoriaFilter = document.getElementById('categoriaFilter');
         const tipoFilter = document.getElementById('tipoFilter');
-        const emptyStateContainer = document.querySelector('.at-clientes__empty-container');
+        const clientesContent = document.getElementById('clientes-content');
+        const noResultsContainer = document.getElementById('noResultsContainer');
+        const resetFiltersBtn = document.getElementById('resetFiltersBtn');
 
+        // Botão para limpar os filtros
+        if (resetFiltersBtn) {
+            resetFiltersBtn.addEventListener('click', function () {
+                searchInput.value = '';
+                categoriaFilter.value = 'Todas as categorias';
+                tipoFilter.value = 'Todos os tipos';
+                filterClients();
+            });
+        }
+
+        // Função para aplicar os filtros e mostrar/esconder os cards de cliente
         function filterClients() {
             const searchTerm = searchInput.value.toLowerCase().trim();
             const categoriaValue = categoriaFilter.value;
             const tipoValue = tipoFilter.value;
 
             let visibleClientCount = 0;
+            let totalClientCount = 0;
 
-            // Seleciona diretamente os headings de grupo de letras
             const letterHeadings = document.querySelectorAll('.at-clientes__grupo-letra');
 
-            // Para cada heading de letra, encontra o container pai e os cards relacionados
             letterHeadings.forEach(heading => {
-                // Encontra o container pai (div que contém o heading)
-                const letterGroup = heading.closest('div');
+                const cardRow = heading.nextElementSibling;
 
-                // Encontra a linha de cards (que vem após o heading)
-                const cardRow = letterGroup.querySelector('.row');
-
-                if (!cardRow) {
+                if (!cardRow || !cardRow.classList.contains('row')) {
                     return;
                 }
 
                 let groupHasVisibleClients = false;
                 const cards = cardRow.querySelectorAll('.at-clientes__card');
+                totalClientCount += cards.length;
 
                 cards.forEach(card => {
                     const cardCol = card.closest('.col');
@@ -358,7 +384,6 @@
                     const clientCategoria = categoriaBadge ? categoriaBadge.textContent : '';
                     const clientTipo = tipoBadge ? tipoBadge.textContent : '';
 
-                    // Match conditions
                     const matchesSearch = searchTerm === '' || clientName.includes(searchTerm);
                     const matchesCategoria = categoriaValue === 'Todas as categorias' || clientCategoria === categoriaValue;
                     const matchesTipo = tipoValue === 'Todos os tipos' || clientTipo === tipoValue;
@@ -375,24 +400,25 @@
                     }
                 });
 
-                // Show/hide the letter heading based on visible clients
                 heading.style.display = groupHasVisibleClients ? '' : 'none';
-
-                // Also hide the row container if no clients are visible within it
                 if (cardRow) {
                     cardRow.style.display = groupHasVisibleClients ? '' : 'none';
                 }
             });
 
-            // Show/hide the empty state message
-            if (emptyStateContainer) {
-                const originalTotalClients = document.querySelectorAll('.at-clientes__card').length;
-                const shouldShowEmpty = (visibleClientCount === 0 && originalTotalClients > 0);
-                emptyStateContainer.style.display = shouldShowEmpty ? '' : 'none';
+            // Exibe ou esconde containers com base nos resultados
+            if (totalClientCount > 0) {
+                if (visibleClientCount === 0) {
+                    if (clientesContent) clientesContent.style.display = 'none';
+                    if (noResultsContainer) noResultsContainer.style.display = '';
+                } else {
+                    if (clientesContent) clientesContent.style.display = '';
+                    if (noResultsContainer) noResultsContainer.style.display = 'none';
+                }
             }
         }
 
-        // Attach event listeners
+        // Aplica os filtros ao digitar ou trocar seleções
         if (searchInput) {
             searchInput.addEventListener('input', filterClients);
         }
@@ -405,10 +431,11 @@
             tipoFilter.addEventListener('change', filterClients);
         }
 
-        // Initial filter call
+        // Aplica os filtros na primeira renderização
         filterClients();
     });
 </script>
+
 
 </body>
 </html>
